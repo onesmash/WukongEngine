@@ -1,0 +1,3 @@
+[submodule "wukong_base"]
+	path = wukong_base
+	url = https://github.com/onesmash/WukongBase.git
