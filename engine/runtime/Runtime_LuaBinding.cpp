@@ -29,19 +29,11 @@ static const luaL_Reg modules[] =
 {
     {"runtime.messageloop", luaopen_MessageLoopModule},
     {"runtime.time", luaopen_TimeModule},
-    {"runtime.render", luaopen_RenderModule},
-    {"runtime.audio", luaopen_AudioModule},
-    {"runtime.profile", luaopen_profiler},
     {0, 0}
 };
     
 static const luaL_Reg types[] =
 {
-    {"runtime.Texture.c", runtime_texture},
-    {"runtime.AudioClip.c", runtime_audio_clip},
-    {"runtime.AudioSource.c", runtime_audio_source},
-    {"runtime.TTFont.c", runtime_ttfont},
-    {"runtime.Canvas.c", runtime_canvas},
     {0, 0}
 };
     

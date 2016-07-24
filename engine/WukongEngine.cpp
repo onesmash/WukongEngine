@@ -10,14 +10,8 @@
 #include "Runtime_LuaBinding.h"
 #include "base/message_loop/MessageLoop.h"
 #include "lfs.h"
-#include "SDL.h"
-#include "Renderer.h"
 
 #include <iostream>
-
-extern "C" int luaopen_SDL(lua_State*);
-extern "C" int luaopen_SDL_image(lua_State*);
-extern "C" int luaopen_luatrace_c_hook(lua_State*);
 
 namespace WukongEngine {
 WukongEngine::WukongEngine(const std::string& name)
@@ -49,13 +43,8 @@ void WukongEngine::startInternal()
     luaL_openlibs(L_);
     Runtime::luax_preload(L_, Runtime::luaopen_runtime, "runtime");
     Runtime::luax_preload(L_, luaopen_lfs, "lfs");
-    Runtime::luax_preload(L_, luaopen_SDL, "SDL");
-    Runtime::luax_preload(L_, luaopen_SDL_image, "SDL.image");
     //Runtime::luax_preload(L_, luaopen_luatrace_c_hook, "luatrace.c_hook");
     
-    lua_getglobal(L_, "require");
-    lua_pushstring(L_, "SDL");
-    lua_call(L_, 1, 1);
     lua_getglobal(L_, "require");
     lua_pushstring(L_, "runtime");
     lua_call(L_, 1, 1);
@@ -67,16 +56,7 @@ void WukongEngine::startInternal()
     lua_setfield(L_, -2, "_scriptDirectory");
     lua_pushstring(L_, env_.tempDirectory.c_str());
     lua_setfield(L_, -2, "_tempDirectory");
-    lua_pushlightuserdata(L_, env_.window);
-    lua_setfield(L_, -2, "_window");
-    Renderer* renderer = new Renderer(env_.renderer);
-    Runtime::luax_push_objectPtr<Renderer>(L_, renderer);
-    lua_setfield(L_, -2, "_renderer");
-    lua_pushlightuserdata(L_, env_.context);
-    lua_setfield(L_, -2, "_context");
     lua_pop(L_, 1);
-    
-    SDL_GL_MakeCurrent(env_.window, env_.context);
     
     lua_getglobal(L_, "debug");
     lua_getfield(L_, -1, "traceback");

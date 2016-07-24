@@ -12,7 +12,6 @@ local time = require('runtime.time')
 package.path = package.path .. ';' .. Runtime._scriptDirectory .. '/?.lua'
 local Coroutine = require('Coroutine')
 local Continuation = require('Continuation')
-local SDL = require('SDL')
 
 math.randomseed(os.time())
 
@@ -95,16 +94,6 @@ local co1 = Runtime.startCoroutine(function()
 	Runtime.waitForCoroutine(co0)
 	print('end co1')
 end)
-
-Runtime.Device = {}
-Runtime.Device.displayInfo = {}
-local sdlDisplayMode = SDL.getCurrentDisplayMode(0)
-Runtime.Device.displayInfo.w = sdlDisplayMode.w
-Runtime.Device.displayInfo.h = sdlDisplayMode.h
-Runtime.Device.displayInfo.refreshRate = sdlDisplayMode.refreshRate or 60
-
-local WukongEngine = require('WukongEngine')
-_G.WukongEngine = WukongEngine()
 
 local main = loadfile(Runtime._scriptDirectory .. '/main.lua')
 

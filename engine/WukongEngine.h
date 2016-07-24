@@ -26,12 +26,6 @@ public:
         std::string serviceDirectory;
         std::string scriptDirectory;
         std::string tempDirectory;
-        SDL_Window *window;
-        SDL_Renderer *renderer;
-        void *context;
-        int screenWidth;
-        int screenHeight;
-        int refreshRate;
     };
     explicit WukongEngine(const std::string& name);
     virtual ~WukongEngine();
@@ -46,7 +40,6 @@ private:
     std::shared_ptr<WukongBase::Base::Thread> thread_;
     lua_State *L_;
     EngineEnv env_;
-    //std::list<Base::MessageLoop::MessageLoopObserver> observers_;
 };
 }
 
