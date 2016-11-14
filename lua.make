@@ -24,7 +24,7 @@ ifeq ($(config),debug_osx)
   TARGET = $(TARGETDIR)/liblua.a
   OBJDIR = obj/osx/debug/lua
   DEFINES += -DDEBUG
-  INCLUDES += -Iwukong_base -Iengine/common -Iengine/lua_service -Iengine/module -Iengine/runtime -Iengine/script -Iengine/third_party -Iengine/module/message_loop -Iengine/module/time -Iengine/script/OO -Iengine/script/WuKongEngine -Iengine/third_party/filesystem -Ithird_party/lua/lua/src
+  INCLUDES += -Ithird_party/lua/lua/src
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
@@ -59,7 +59,7 @@ ifeq ($(config),release_osx)
   TARGET = $(TARGETDIR)/liblua.a
   OBJDIR = obj/osx/release/lua
   DEFINES += -DNDEBUG
-  INCLUDES += -Iwukong_base -Iengine/common -Iengine/lua_service -Iengine/module -Iengine/runtime -Iengine/script -Iengine/third_party -Iengine/module/message_loop -Iengine/module/time -Iengine/script/OO -Iengine/script/WuKongEngine -Iengine/third_party/filesystem -Ithird_party/lua/lua/src
+  INCLUDES += -Ithird_party/lua/lua/src
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
@@ -81,16 +81,6 @@ all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/WukongEngine.o \
-	$(OBJDIR)/Module.o \
-	$(OBJDIR)/Object.o \
-	$(OBJDIR)/MessageLoopModule_LuaBinding.o \
-	$(OBJDIR)/MessageLoopMoudle.o \
-	$(OBJDIR)/TimeModule.o \
-	$(OBJDIR)/TimeModule_LuaBinding.o \
-	$(OBJDIR)/Runtime.o \
-	$(OBJDIR)/Runtime_LuaBinding.o \
-	$(OBJDIR)/lfs.o \
 	$(OBJDIR)/lapi.o \
 	$(OBJDIR)/lauxlib.o \
 	$(OBJDIR)/lbaselib.o \
@@ -181,36 +171,6 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 endif
 
-$(OBJDIR)/WukongEngine.o: engine/WukongEngine.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Module.o: engine/common/Module.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Object.o: engine/common/Object.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/MessageLoopModule_LuaBinding.o: engine/module/message_loop/MessageLoopModule_LuaBinding.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/MessageLoopMoudle.o: engine/module/message_loop/MessageLoopMoudle.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/TimeModule.o: engine/module/time/TimeModule.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/TimeModule_LuaBinding.o: engine/module/time/TimeModule_LuaBinding.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Runtime.o: engine/runtime/Runtime.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Runtime_LuaBinding.o: engine/runtime/Runtime_LuaBinding.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/lfs.o: engine/third_party/filesystem/lfs.c
-	@echo $(notdir $<)
-	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/lapi.o: third_party/lua/lua/src/lapi.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"

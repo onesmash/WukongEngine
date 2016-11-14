@@ -24,7 +24,7 @@ ifeq ($(config),debug_osx)
   TARGET = $(TARGETDIR)/WukongEngine
   OBJDIR = obj/osx/debug/WukongEngine
   DEFINES += -DDEBUG
-  INCLUDES += -Iwukong_base -Ithird_party/lua/lua/src -Iengine/common -Iengine/lua_service -Iengine/module -Iengine/runtime -Iengine/script -Iengine/third_party -Iengine/module/message_loop -Iengine/module/time -Iengine/script/OO -Iengine/script/WuKongEngine -Iengine/third_party/filesystem
+  INCLUDES += -Iwukong_base/bin/include -Ithird_party/lua/lua/src -Iengine/common -Iengine/lua_service -Iengine/module -Iengine/runtime -Iengine/script -Iengine/third_party -Iengine/module/message_loop -Iengine/module/time -Iengine/script/OO -Iengine/script/WuKongEngine -Iengine/third_party/filesystem
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
@@ -61,7 +61,7 @@ ifeq ($(config),release_osx)
   TARGET = $(TARGETDIR)/WukongEngine
   OBJDIR = obj/osx/release/WukongEngine
   DEFINES += -DNDEBUG
-  INCLUDES += -Iwukong_base -Ithird_party/lua/lua/src -Iengine/common -Iengine/lua_service -Iengine/module -Iengine/runtime -Iengine/script -Iengine/third_party -Iengine/module/message_loop -Iengine/module/time -Iengine/script/OO -Iengine/script/WuKongEngine -Iengine/third_party/filesystem
+  INCLUDES += -Iwukong_base/bin/include -Ithird_party/lua/lua/src -Iengine/common -Iengine/lua_service -Iengine/module -Iengine/runtime -Iengine/script -Iengine/third_party -Iengine/module/message_loop -Iengine/module/time -Iengine/script/OO -Iengine/script/WuKongEngine -Iengine/third_party/filesystem
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2

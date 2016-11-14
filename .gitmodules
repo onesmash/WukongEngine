@@ -1,3 +1,6 @@
 [submodule "wukong_base"]
 	path = wukong_base
 	url = https://github.com/onesmash/WukongBase.git
+[submodule "grpc"]
+	path = third_party/grpc/grpc
+	url = https://github.com/onesmash/grpc.git

@@ -4,12 +4,10 @@ workspace "WukongEngine"
 	kind "ConsoleApp"
 	language "C++"
 	flags {"C++11"}
-	includedirs {"wukong_base", "third_party/lua/lua/src", "engine/**"}
-	files {"engine/**.cpp", "engine/**.c"}
-	filter "configurations:Debug"
+	filter "configurations:debug"
       defines { "DEBUG" }
       flags { "Symbols" }
-	filter "configurations:Release"
+	filter "configurations:release"
       defines { "NDEBUG" }
       optimize "On"
 
@@ -21,6 +19,8 @@ project "WukongEngine"
 	prebuildcommands {
 		"make -C wukong_base config=" .. "%{cfg.buildcfg}_%{cfg.platform}" .. " target=wukongbase"
 	}
+	includedirs {"wukong_base/bin/include", "third_party/lua/lua/src", "engine/**"}
+	files {"engine/**.cpp", "engine/**.c"}
 	files {
 		"main.cpp"
 	}
