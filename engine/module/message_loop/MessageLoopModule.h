@@ -1,13 +1,13 @@
 //
 //  MessageLoopModule.h
-//  AppCore
+//  WukongEngine
 //
 //  Created by Xuhui on 15/12/20.
 //  Copyright © 2015年 Xuhui. All rights reserved.
 //
 
-#ifndef __AppCore_Module__MessageLoop_h
-#define __AppCore_Module__MessageLoop_h
+#ifndef __WukongEngine_Module__MessageLoop_h
+#define __WukongEngine_Module__MessageLoop_h
 
 #include "base/message_loop/Closure.h"
 #include "Time.h"

@@ -1,6 +1,6 @@
 //
 //  MessageLoopModule_LuaBinding.cpp
-//  AppCore
+//  WukongEngine
 //
 //  Created by Xuhui on 15/12/14.
 //  Copyright © 2015年 Xuhui. All rights reserved.

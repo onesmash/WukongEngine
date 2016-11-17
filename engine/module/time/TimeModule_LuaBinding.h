@@ -1,6 +1,6 @@
 //
 //  TimeModule_LuaBinding.hpp
-//  AppCore
+//  WukongEngine
 //
 //  Created by Xuhui on 16/1/21.
 //  Copyright © 2016年 Xuhui. All rights reserved.

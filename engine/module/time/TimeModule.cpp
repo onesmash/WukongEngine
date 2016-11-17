@@ -1,6 +1,6 @@
 //
 //  TimeModule.cpp
-//  AppCore
+//  WukongEngine
 //
 //  Created by Xuhui on 16/1/20.
 //  Copyright © 2016年 Xuhui. All rights reserved.

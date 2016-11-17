@@ -20,7 +20,7 @@ ifeq ($(config),debug_osx)
   ifeq ($(origin AR), default)
     AR = ar
   endif
-  TARGETDIR = bin/osx/debug
+  TARGETDIR = bin
   TARGET = $(TARGETDIR)/liblua.a
   OBJDIR = obj/osx/debug/lua
   DEFINES += -DDEBUG
@@ -30,9 +30,9 @@ ifeq ($(config),debug_osx)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS) -std=c++11
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += bin/osx/debug/liblua.a -lc++ -luv -lwukongbase
-  LDDEPS += bin/osx/debug/liblua.a
-  ALL_LDFLAGS += $(LDFLAGS) -Lwukong_base/bin
+  LIBS +=
+  LDDEPS +=
+  ALL_LDFLAGS += $(LDFLAGS)
   LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
   define PREBUILDCMDS
   endef
@@ -55,7 +55,7 @@ ifeq ($(config),release_osx)
   ifeq ($(origin AR), default)
     AR = ar
   endif
-  TARGETDIR = bin/osx/release
+  TARGETDIR = bin
   TARGET = $(TARGETDIR)/liblua.a
   OBJDIR = obj/osx/release/lua
   DEFINES += -DNDEBUG
@@ -65,9 +65,9 @@ ifeq ($(config),release_osx)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS) -std=c++11
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += bin/osx/release/liblua.a -lc++ -luv -lwukongbase
-  LDDEPS += bin/osx/release/liblua.a
-  ALL_LDFLAGS += $(LDFLAGS) -Lwukong_base/bin
+  LIBS +=
+  LDDEPS +=
+  ALL_LDFLAGS += $(LDFLAGS)
   LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
   define PREBUILDCMDS
   endef

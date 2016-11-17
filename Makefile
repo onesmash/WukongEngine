@@ -12,23 +12,33 @@ endif
 
 ifeq ($(config),debug_osx)
   WukongEngine_config = debug_osx
+  wukongbase_config = debug_osx
   lua_config = debug_osx
+  grpc_config = debug_osx
 endif
 ifeq ($(config),release_osx)
   WukongEngine_config = release_osx
+  wukongbase_config = release_osx
   lua_config = release_osx
+  grpc_config = release_osx
 endif
 
-PROJECTS := WukongEngine lua
+PROJECTS := WukongEngine wukongbase lua grpc
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
-WukongEngine: lua
+WukongEngine: lua wukongbase
 ifneq (,$(WukongEngine_config))
 	@echo "==== Building WukongEngine ($(WukongEngine_config)) ===="
 	@${MAKE} --no-print-directory -C . -f WukongEngine.make config=$(WukongEngine_config)
+endif
+
+wukongbase:
+ifneq (,$(wukongbase_config))
+	@echo "==== Building wukongbase ($(wukongbase_config)) ===="
+	@${MAKE} --no-print-directory -C . -f wukongbase.make config=$(wukongbase_config)
 endif
 
 lua:
@@ -37,9 +47,17 @@ ifneq (,$(lua_config))
 	@${MAKE} --no-print-directory -C . -f lua.make config=$(lua_config)
 endif
 
+grpc:
+ifneq (,$(grpc_config))
+	@echo "==== Building grpc ($(grpc_config)) ===="
+	@${MAKE} --no-print-directory -C . -f grpc.make config=$(grpc_config)
+endif
+
 clean:
 	@${MAKE} --no-print-directory -C . -f WukongEngine.make clean
+	@${MAKE} --no-print-directory -C . -f wukongbase.make clean
 	@${MAKE} --no-print-directory -C . -f lua.make clean
+	@${MAKE} --no-print-directory -C . -f grpc.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -52,6 +70,8 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   WukongEngine"
+	@echo "   wukongbase"
 	@echo "   lua"
+	@echo "   grpc"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"

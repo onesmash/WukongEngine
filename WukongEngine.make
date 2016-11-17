@@ -20,23 +20,21 @@ ifeq ($(config),debug_osx)
   ifeq ($(origin AR), default)
     AR = ar
   endif
-  TARGETDIR = bin/osx/debug
+  TARGETDIR = bin
   TARGET = $(TARGETDIR)/WukongEngine
   OBJDIR = obj/osx/debug/WukongEngine
   DEFINES += -DDEBUG
-  INCLUDES += -Iwukong_base/bin/include -Ithird_party/lua/lua/src -Iengine/common -Iengine/lua_service -Iengine/module -Iengine/runtime -Iengine/script -Iengine/third_party -Iengine/module/message_loop -Iengine/module/time -Iengine/script/OO -Iengine/script/WuKongEngine -Iengine/third_party/filesystem
+  INCLUDES += -Iwukong_base/bin/include -Ithird_party/lua/lua/src -Iengine/common -Iengine/lua_service -Iengine/module -Iengine/runtime -Iengine/script -Iengine/third_party -Iengine/module/grpc_server -Iengine/module/message_loop -Iengine/module/time -Iengine/script/OO -Iengine/script/WuKongEngine -Iengine/third_party/filesystem -Ithird_party/grpc/grpc/include
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS) -std=c++11
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += bin/osx/debug/liblua.a -lc++ -luv -lwukongbase
-  LDDEPS += bin/osx/debug/liblua.a
-  ALL_LDFLAGS += $(LDFLAGS) -Lwukong_base/bin
+  LIBS += bin/liblua.a -lc++ -luv -lwukongbase -lgrpc++
+  LDDEPS += bin/liblua.a
+  ALL_LDFLAGS += $(LDFLAGS) -Lbin -Lwukong_base/bin -Lthird_party/grpc/grpc/libs/opt
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
-	@echo Running prebuild commands
-	make -C wukong_base config=debug_osx target=wukongbase
   endef
   define PRELINKCMDS
   endef
@@ -57,23 +55,21 @@ ifeq ($(config),release_osx)
   ifeq ($(origin AR), default)
     AR = ar
   endif
-  TARGETDIR = bin/osx/release
+  TARGETDIR = bin
   TARGET = $(TARGETDIR)/WukongEngine
   OBJDIR = obj/osx/release/WukongEngine
   DEFINES += -DNDEBUG
-  INCLUDES += -Iwukong_base/bin/include -Ithird_party/lua/lua/src -Iengine/common -Iengine/lua_service -Iengine/module -Iengine/runtime -Iengine/script -Iengine/third_party -Iengine/module/message_loop -Iengine/module/time -Iengine/script/OO -Iengine/script/WuKongEngine -Iengine/third_party/filesystem
+  INCLUDES += -Iwukong_base/bin/include -Ithird_party/lua/lua/src -Iengine/common -Iengine/lua_service -Iengine/module -Iengine/runtime -Iengine/script -Iengine/third_party -Iengine/module/grpc_server -Iengine/module/message_loop -Iengine/module/time -Iengine/script/OO -Iengine/script/WuKongEngine -Iengine/third_party/filesystem -Ithird_party/grpc/grpc/include
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS) -std=c++11
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += bin/osx/release/liblua.a -lc++ -luv -lwukongbase
-  LDDEPS += bin/osx/release/liblua.a
-  ALL_LDFLAGS += $(LDFLAGS) -Lwukong_base/bin
+  LIBS += bin/liblua.a -lc++ -luv -lwukongbase -lgrpc++
+  LDDEPS += bin/liblua.a
+  ALL_LDFLAGS += $(LDFLAGS) -Lbin -Lwukong_base/bin -Lthird_party/grpc/grpc/libs/opt
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
-	@echo Running prebuild commands
-	make -C wukong_base config=release_osx target=wukongbase
   endef
   define PRELINKCMDS
   endef
@@ -88,8 +84,8 @@ OBJECTS := \
 	$(OBJDIR)/WukongEngine.o \
 	$(OBJDIR)/Module.o \
 	$(OBJDIR)/Object.o \
+	$(OBJDIR)/MessageLoopModule.o \
 	$(OBJDIR)/MessageLoopModule_LuaBinding.o \
-	$(OBJDIR)/MessageLoopMoudle.o \
 	$(OBJDIR)/TimeModule.o \
 	$(OBJDIR)/TimeModule_LuaBinding.o \
 	$(OBJDIR)/Runtime.o \
@@ -162,10 +158,10 @@ $(OBJDIR)/Module.o: engine/common/Module.cpp
 $(OBJDIR)/Object.o: engine/common/Object.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/MessageLoopModule_LuaBinding.o: engine/module/message_loop/MessageLoopModule_LuaBinding.cpp
+$(OBJDIR)/MessageLoopModule.o: engine/module/message_loop/MessageLoopModule.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/MessageLoopMoudle.o: engine/module/message_loop/MessageLoopMoudle.cpp
+$(OBJDIR)/MessageLoopModule_LuaBinding.o: engine/module/message_loop/MessageLoopModule_LuaBinding.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TimeModule.o: engine/module/time/TimeModule.cpp

@@ -6,19 +6,17 @@
 //  Copyright (c) 2015年 Xuhui. All rights reserved.
 //
 
-#ifndef __AppCore__AppCore__
-#define __AppCore__AppCore__
+#ifndef __WukongEngine__WukongEngine__
+#define __WukongEngine__WukongEngine__
 #include "base/thread/Thread.h"
 #include <memory>
 #include <string>
 #include <list>
 
 extern "C" struct lua_State;
-extern "C" struct SDL_Window;
-extern "C" struct SDL_Renderer;
 
 namespace WukongEngine {
-    
+
 class WukongEngine {
 public:
     struct EngineEnv {
@@ -31,16 +29,16 @@ public:
     virtual ~WukongEngine();
     void start(const EngineEnv& env);
     void stop();
-    
+
 private:
-    
+
     void startInternal();
     void stopInternal();
-    
+
     std::shared_ptr<WukongBase::Base::Thread> thread_;
     lua_State *L_;
     EngineEnv env_;
 };
 }
 
-#endif /* defined(__AppCore__AppCore__) */
+#endif /* defined(__WukongEngine__WukongEngine__) */

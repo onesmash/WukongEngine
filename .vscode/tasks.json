@@ -1,0 +1,28 @@
+{
+    "version": "0.1.0",
+    "command": "sh",
+    "args": ["-c"],
+    "isShellCommand": true,
+    "showOutput": "always",
+    "suppressTaskName": true,
+    "osx": {
+        "tasks": [
+            {
+                "taskName": "build_debug",
+                "args": ["make config=debug_osx"]
+            },
+            {
+                "taskName": "build_release",
+                "args": ["make config=release_osx"]
+            },
+            {
+                "taskName": "clean",
+                "args": ["make clean"]
+            },
+            {
+                "taskName": "run",
+                "args": ["${workspaceRoot}/bin/WukongEngine"]
+            }
+        ]
+    }
+}
